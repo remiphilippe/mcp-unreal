@@ -2,6 +2,12 @@
 
 This directory contains markdown documentation files that get indexed into the Bleve search index used by the `lookup_docs` and `lookup_class` MCP tools.
 
+## Attribution
+
+Documentation in `ue5.7/` is derived from the [Unreal Engine documentation](https://dev.epicgames.com/documentation/en-us/unreal-engine/) by Epic Games, Inc. Unreal Engine and its documentation are copyright Epic Games, Inc. All rights reserved. This project uses summarized and reformatted excerpts for AI-assisted development tooling under fair use. Unreal Engine is a trademark of Epic Games, Inc.
+
+Documentation in `realtimemesh/` is derived from the [RealtimeMesh](https://github.com/TriAxis-Games/RealtimeMeshComponent) plugin by TriAxis Games.
+
 ## Directory Structure
 
 ```
