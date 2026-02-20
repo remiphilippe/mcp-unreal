@@ -1,0 +1,6 @@
+[2025.02.18-10.30.00:000][  0]LogInit: Build: ++UE5+Release-5.7-CL-0
+[2025.02.18-10.30.01:000][  0]LogInit: Command Line: /Game/MyProject.uproject -ExecCmds="Automation RunTests NonExistent." -nullrhi -unattended
+[2025.02.18-10.30.05:000][  0]LogAutomationController: Display: [AutomationController] Running tests...
+[2025.02.18-10.30.06:000][  0]LogAutomationController: Warning: No tests matched filter 'NonExistent.'
+[2025.02.18-10.30.07:000][  0]LogAutomationController: Display: [AutomationController] Tests complete. 0 tests run. 0 passed. 0 failed.
+[2025.02.18-10.30.08:000][  0]LogCore: Engine exit requested (reason: Quit command)

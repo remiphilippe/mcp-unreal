@@ -1,0 +1,8 @@
+[2025.02.18-10.30.00:000][  0]LogInit: Build: ++UE5+Release-5.7-CL-0
+[2025.02.18-10.30.05:000][  0]LogAutomationController: Display: [AutomationController] Available tests:
+[2025.02.18-10.30.05:001][  0]LogAutomationController: Display: ] MyProject.Unit.MathUtils
+[2025.02.18-10.30.05:002][  0]LogAutomationController: Display: ] MyProject.Unit.StringUtils
+[2025.02.18-10.30.05:003][  0]LogAutomationController: Display: ] MyProject.Unit.CalculationTest
+[2025.02.18-10.30.05:004][  0]LogAutomationController: Display: ] MyProject.Integration.GameMode
+[2025.02.18-10.30.05:005][  0]LogAutomationController: Display: ] MyProject.Visual.ScreenshotTest
+[2025.02.18-10.30.06:000][  0]LogCore: Engine exit requested (reason: Quit command)

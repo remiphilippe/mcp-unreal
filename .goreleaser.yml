@@ -1,0 +1,53 @@
+# GoReleaser configuration for mcp-unreal.
+# Triggered by .github/workflows/release.yml on tag push (v*).
+# See CLAUDE.md: Release Process.
+
+version: 2
+
+project_name: mcp-unreal
+
+builds:
+  - id: mcp-unreal
+    main: ./cmd/mcp-unreal
+    binary: mcp-unreal
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.Version={{.Version}}
+
+archives:
+  - id: default
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+release:
+  github:
+    owner: remiphilippe
+    name: mcp-unreal
+  prerelease: auto
+  name_template: "v{{.Version}}"

@@ -1,0 +1,34 @@
+# golangci-lint configuration for mcp-unreal.
+# See CLAUDE.md "golangci-lint config" section.
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - gosimple
+    - ineffassign
+    - misspell
+    - gofmt
+    - goimports
+    - revive
+    - gosec
+    - bodyclose
+
+linters-settings:
+  revive:
+    rules:
+      - name: exported
+        arguments:
+          - checkPrivateReceivers
+      - name: blank-imports
+      - name: context-as-argument
+      - name: error-return
+      - name: error-strings
+      - name: increment-decrement
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
