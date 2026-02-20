@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 package headless
 
 import (

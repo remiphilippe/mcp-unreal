@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // Command mcp-unreal is an MCP (Model Context Protocol) server that gives
 // AI coding agents complete autonomous control over a UE 5.7 project.
 //

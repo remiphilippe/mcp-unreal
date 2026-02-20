@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // Package status implements the "status" MCP tool which reports server
 // health, editor connectivity, project info, and feature availability.
 //

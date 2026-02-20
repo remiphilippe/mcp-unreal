@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // Package docs implements the documentation index and lookup tools
 // for the mcp-unreal server.
 //

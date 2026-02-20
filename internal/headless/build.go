@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // Package headless implements MCP tools that invoke UnrealEditor-Cmd as
 // a subprocess for builds, tests, and project file generation.
 //

@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // Package config handles environment configuration, UE path detection,
 // and project root discovery for the mcp-unreal server.
 //

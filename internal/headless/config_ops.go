@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // config_ops.go implements the config_ops MCP tool for reading and writing
 // UE .ini config files (DefaultEngine.ini, DefaultGame.ini, etc.).
 //

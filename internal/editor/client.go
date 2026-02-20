@@ -1,3 +1,5 @@
+// Copyright (c) mcp-unreal project contributors. Apache-2.0 license.
+
 // Package editor implements MCP tools that communicate with the running
 // UE 5.7 editor via the Remote Control API (port 30010) and the MCPUnreal
 // editor plugin (port 8090).

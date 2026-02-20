@@ -569,3 +569,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, coding standards, 
 ## License
 
 Apache-2.0 — see [LICENSE](LICENSE).
+
+Unreal Engine is a trademark of Epic Games, Inc. This project is not affiliated with or endorsed by Epic Games.
