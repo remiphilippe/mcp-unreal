@@ -10,6 +10,9 @@
 
 #include "Engine/Blueprint.h"
 #include "Engine/BlueprintGeneratedClass.h"
+#include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetBlueprintGeneratedClass.h"
+#include "WidgetBlueprint.h"
 #include "EdGraph/EdGraph.h"
 #include "EdGraph/EdGraphNode.h"
 #include "EdGraph/EdGraphPin.h"
@@ -274,9 +277,21 @@ namespace MCPUnreal {
         }
       }
 
+      // Widget Blueprints need UWidgetBlueprint/UWidgetBlueprintGeneratedClass instead of the
+      // generic UBlueprint/UBlueprintGeneratedClass — otherwise the created asset is a plain
+      // Blueprint with UserWidget as parent, has no Designer tab, and is unusable as UMG.
+      // See issue #1.
+      TSubclassOf<UBlueprint> BlueprintClass = UBlueprint::StaticClass();
+      TSubclassOf<UBlueprintGeneratedClass> BlueprintGeneratedClass =
+          UBlueprintGeneratedClass::StaticClass();
+      if (ParentClass->IsChildOf(UUserWidget::StaticClass())) {
+        BlueprintClass = UWidgetBlueprint::StaticClass();
+        BlueprintGeneratedClass = UWidgetBlueprintGeneratedClass::StaticClass();
+      }
+
       UBlueprint* NewBP = FKismetEditorUtilities::CreateBlueprint(
           ParentClass, CreatePackage(*(FinalPath + BPName)), FName(*BPName), BPTYPE_Normal,
-          UBlueprint::StaticClass(), UBlueprintGeneratedClass::StaticClass());
+          BlueprintClass, BlueprintGeneratedClass);
 
       if (!NewBP) {
         SendError(OnComplete, TEXT("Failed to create Blueprint"), 500);

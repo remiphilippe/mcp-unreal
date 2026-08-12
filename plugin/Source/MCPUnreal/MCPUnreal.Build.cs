@@ -43,6 +43,7 @@ public class MCPUnreal : ModuleRules
 			"GameplayTasks",
 			"Niagara",
 			"NiagaraCore",
+			"UMGEditor",  // UWidgetBlueprint (fix issue #1: WidgetBlueprint creation)
 		});
 
 		// Optional Fab plugin dependency — only if installed.
