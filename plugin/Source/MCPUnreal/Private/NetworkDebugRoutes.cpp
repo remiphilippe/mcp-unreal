@@ -6,12 +6,9 @@
 
 #include "MCPUnrealUtils.h"
 
-#include "HttpManager.h"
-#include "HttpModule.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
 #include "Misc/DateTime.h"
-#include "Containers/Ticker.h"
 
 namespace MCPUnreal {
 
@@ -122,50 +119,12 @@ namespace MCPUnreal {
     return Json;
   }
 
-  // ---------------------------------------------------------------------------
-  // Auto-tracking: poll FHttpModule for in-flight requests.
-  // ---------------------------------------------------------------------------
-
-  class FHTTPAutoTracker {
-   public:
-    void Start() {
-      if (bStarted) return;
-      bStarted = true;
-
-      // Ticker runs every 0.5 seconds on the game thread.
-      TickerHandle = FTSTicker::GetCoreTicker().AddTicker(
-          FTickerDelegate::CreateRaw(this, &FHTTPAutoTracker::OnTick), 0.5f);
-
-      UE_LOG(LogMCPUnreal, Log, TEXT("Network auto-tracker started (polling every 0.5s)"));
-    }
-
-    void Stop() {
-      if (!bStarted) return;
-      if (TickerHandle.IsValid()) {
-        FTSTicker::GetCoreTicker().RemoveTicker(TickerHandle);
-      }
-      bStarted = false;
-    }
-
-   private:
-    bool OnTick(float DeltaTime) {
-      FHttpModule& HttpModule = FHttpModule::Get();
-      FHttpManager& Manager = HttpModule.GetHttpManager();
-
-      // Flush completed requests to the tracker.
-      Manager.Flush(EHttpFlushReason::Default);
-
-      return true;  // Keep ticking.
-    }
-
-    FTSTicker::FDelegateHandle TickerHandle;
-    bool bStarted = false;
-  };
-
-  static FHTTPAutoTracker& GetAutoTracker() {
-    static FHTTPAutoTracker Instance;
-    return Instance;
-  }
+  // Note: there is intentionally no periodic poller here. A previous version
+  // called FHttpManager::Flush(EHttpFlushReason::Default) from a 0.5 s core
+  // ticker. Flush() blocks the game thread until in-flight requests finish
+  // (it sleeps in a loop), so editors with many concurrent HTTP downloads
+  // (e.g. streamed 3D tiles) froze every 0.5 s. The ticker never recorded
+  // anything into FNetworkTracker, so removing it loses no data.
 
   // ---------------------------------------------------------------------------
   // POST /api/network/debug
@@ -243,7 +202,7 @@ namespace MCPUnreal {
       TSharedPtr<FJsonObject> ResponseJson = MakeShareable(new FJsonObject());
       ResponseJson->SetNumberField(TEXT("total_tracked"), GetTracker().GetTotalCount());
       ResponseJson->SetNumberField(TEXT("active_count"), GetTracker().GetActiveCount());
-      ResponseJson->SetBoolField(TEXT("auto_tracking_enabled"), true);
+      ResponseJson->SetBoolField(TEXT("auto_tracking_enabled"), false);
 
       SendJson(OnComplete, ResponseJson);
       return true;
@@ -259,15 +218,12 @@ namespace MCPUnreal {
 
   void RegisterNetworkDebugRoutes(TSharedPtr<IHttpRouter> Router,
                                   TArray<FHttpRouteHandle>& Handles) {
-    // Start auto-tracking when routes are registered.
-    GetAutoTracker().Start();
-
     Handles.Add(Router->BindRoute(FHttpPath(TEXT("/api/network/debug")),
                                   EHttpServerRequestVerbs::VERB_POST,
                                   FHttpRequestHandler::CreateStatic(&HandleNetworkDebug)));
 
     UE_LOG(LogMCPUnreal, Verbose,
-           TEXT("Registered network debug routes (1 endpoint, auto-tracking enabled)"));
+           TEXT("Registered network debug routes (1 endpoint)"));
   }
 
 }  // namespace MCPUnreal
